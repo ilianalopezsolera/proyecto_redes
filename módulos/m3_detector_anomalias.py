@@ -1,4 +1,7 @@
+from typing import Optional
+
 #!/usr/bin/env python3
+
 """
 =============================================================================
 M3 — Detector de Anomalías IP: Spoofing y TTL Anómalo
