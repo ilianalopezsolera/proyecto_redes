@@ -1,4 +1,4 @@
-from typing import Optional
+
 
 #!/usr/bin/env python3
 
@@ -44,7 +44,7 @@ import datetime
 import os
 import sys
 from dataclasses import dataclass, field
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Optional
 
 from scapy.all import (
     IP, TCP, UDP, ICMP, Raw, send, sniff, rdpcap,
@@ -469,8 +469,7 @@ def main():
         modo_experimento(args)
 
 
-# Fix: Optional no importado explícitamente arriba
-from typing import Optional
+
 
 if __name__ == "__main__":
     main()
