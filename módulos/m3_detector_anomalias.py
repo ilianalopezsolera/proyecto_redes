@@ -1,5 +1,3 @@
-
-
 #!/usr/bin/env python3
 
 """
@@ -43,6 +41,7 @@ import random
 import datetime
 import os
 import sys
+import threading
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional
 
@@ -384,30 +383,34 @@ def modo_experimento(args):
 
     paquetes_capturados = []
     ips_spoofed_usadas  = set()
+    envio_terminado     = threading.Event()
 
     def capturar_cb(pkt):
         paquetes_capturados.append(pkt)
 
-    # Captura en segundo plano
-    from threading import Thread
-    hilo_cap = Thread(
+    def detener_captura(pkt):
+        return envio_terminado.is_set()
+
+    hilo_cap = threading.Thread(
         target=lambda: sniff(
             iface=args.iface, filter="ip",
-            count=args.count + 20,
-            prn=capturar_cb, store=False
+            prn=capturar_cb, store=False,
+            stop_filter=detener_captura,
+            timeout=60
         )
     )
     hilo_cap.start()
-    time.sleep(0.5)  # dejar que la captura inicie
+    time.sleep(0.8)
 
-    # Generar tráfico legítimo
     generar_trafico_legitimo(args.dst, n_legitimos, args.iface)
-    # Generar tráfico spoofed
     ips_usadas = generar_trafico_spoofed(args.dst, n_spoofed, args.iface)
     ips_spoofed_usadas.update(ips_usadas)
 
-    time.sleep(1)
-    hilo_cap.join(timeout=5)
+    time.sleep(2)
+    envio_terminado.set()
+    hilo_cap.join(timeout=10)
+
+    print(f"\n[i] Paquetes esperados: {args.count}  |  Paquetes capturados: {len(paquetes_capturados)}")
 
     # Guardar captura combinada
     ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
