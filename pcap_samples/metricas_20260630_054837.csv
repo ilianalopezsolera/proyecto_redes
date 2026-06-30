@@ -1,0 +1,11 @@
+metrica,valor
+total,165
+tp,50
+fp,0
+fn,0
+tn,115
+tpr,1.0000
+fpr,0.0000
+precision,1.0000
+latencia_promedio_ms,0.0059
+latencia_max_ms,0.0343
