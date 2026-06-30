@@ -309,6 +309,28 @@ Al ejecutar correctamente el proyecto, el usuario podrá:
 
 ---
 
+# Métricas generadas
+
+Durante la ejecución del Módulo 3 se generan archivos CSV con las métricas obtenidas del experimento.
+
+Ejemplo:
+
+- `metricas_20260630_045242.csv`
+- `metricas_20260630_054837.csv`
+
+Estos archivos contienen información utilizada para evaluar el desempeño del detector de anomalías, incluyendo la cantidad de paquetes analizados, paquetes normales, paquetes sospechosos y demás resultados obtenidos durante cada ejecución.
+
+Estas métricas permiten reproducir los experimentos y documentar los resultados obtenidos por el sistema.
+
+Las métricas reportadas pueden incluir:
+
+- Total de paquetes analizados.
+- Paquetes normales.
+- Paquetes anómalos detectados.
+- True Positive Rate (TPR).
+- False Positive Rate (FPR).
+- Latencia del detector.
+
 # RFC de referencia
 
 - RFC 791 – Internet Protocol (IPv4)
